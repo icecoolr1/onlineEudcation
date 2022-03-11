@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package Rpc;
+option go_package = "./Rpc";
+
+message teacherInfo{
+  //教师名
+  string teacherName = 1;
+  string password = 2;
+  string teacherEmail = 3;
+}
+message teacherLoginInfo{
+  //教师名
+  string teacherEmail = 1;
+  string teacherPassword = 2;
+}
+message Response{
+  int32 code = 1;
+  bool res = 2;
+  string message = 3;
+}
+
+message Teacher{
+  int32 id = 1;
+  string password = 2;
+  string email = 3;
+  string name = 4;
+}
+message LoginResponse{
+  int32 code = 1;
+  bool res = 2;
+  string message = 3;
+  Teacher teacher = 4;
+}
+service TeacherRpc{
+  rpc Register(teacherInfo)returns(Response);
+  rpc Login(teacherLoginInfo)returns(LoginResponse);
+}
+
+
+

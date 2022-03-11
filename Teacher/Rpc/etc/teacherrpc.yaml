@@ -1,0 +1,6 @@
+Name: teacherrpc.rpc
+ListenOn: 127.0.0.1:9000
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: teacherrpc.rpc
