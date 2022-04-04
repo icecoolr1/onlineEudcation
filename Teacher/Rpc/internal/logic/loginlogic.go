@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 	"github.com/zeromicro/go-zero/core/logx"
+	"onlineEudcation/Teacher/Dao"
 	"onlineEudcation/Teacher/Rpc/Rpc"
 	"onlineEudcation/Teacher/Rpc/internal/svc"
 	"onlineEudcation/Teacher/etity"
@@ -17,6 +18,8 @@ type LoginLogic struct {
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
+
+var teacherDao dao.TeacherInterface = new(dao.TeacherDao)
 
 func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic {
 	return &LoginLogic{
