@@ -2,7 +2,6 @@ package dao
 
 import (
 	"fmt"
-	"gorm.io/gorm"
 	"onlineEudcation/Teacher/etity"
 	"onlineEudcation/Tools/scripts"
 )
@@ -10,7 +9,7 @@ import (
 type TeacherDao struct{}
 
 var users []etity.Teacher
-var DB *gorm.DB = scripts.GetDatabaseConnection()
+var DB = scripts.GetDatabaseConnection()
 
 func (t TeacherDao) AddTeacher(teacher []etity.Teacher) bool {
 	for _, e := range teacher {

@@ -1,7 +1,11 @@
-package etity
+package Etity
 
 import "gorm.io/gorm"
 
+// Course /*
+/*
+	定义课程信息
+*/
 type Course struct {
 	gorm.Model
 	//课程名
