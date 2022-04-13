@@ -7,6 +7,7 @@ type CourseDaoInterface interface {
 	DelCourse(courseId []int) bool
 	UpdateCourse(course Etity.Course) bool
 	FindCourseByCourseId(courseId int) Etity.Course
+	FindCourseByTeacherId(teacherId int) []Etity.Course
 	FindCourseByCourseName(courseName string) []Etity.Course
 	FindAllCourses() []Etity.Course
 }

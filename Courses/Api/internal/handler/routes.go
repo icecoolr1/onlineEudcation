@@ -22,6 +22,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/addCourseImg",
 				Handler: addCourseImgHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/searchCourseById",
+				Handler: searchCourseByIdHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/course"),
 	)

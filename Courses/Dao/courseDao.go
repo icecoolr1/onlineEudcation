@@ -52,3 +52,8 @@ func (CourseDao) FindAllCourses() []Etity.Course {
 	DB.Find(&courseList)
 	return courseList
 }
+
+func (d CourseDao) FindCourseByTeacherId(teacherId int) []Etity.Course {
+	DB.Where("t_id = ?", teacherId).Find(&courseList)
+	return courseList
+}

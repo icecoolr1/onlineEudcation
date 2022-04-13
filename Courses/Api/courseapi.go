@@ -26,6 +26,7 @@ func main() {
 	defer server.Stop()
 
 	handler.RegisterHandlers(server, ctx)
+	//test
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()

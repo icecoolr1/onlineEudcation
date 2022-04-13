@@ -45,3 +45,8 @@ func TestFindAll(t *testing.T) {
 	courseList := courseDao.FindAllCourses()
 	fmt.Println("courseList:", courseList)
 }
+
+func TestFindBytID(t *testing.T) {
+	courselist := courseDao.FindCourseByTeacherId(36)
+	fmt.Println("courselist:", courselist)
+}
