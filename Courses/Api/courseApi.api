@@ -1,0 +1,39 @@
+syntax = "v1"
+
+info(
+	title: "course api"
+	desc: "course api for teachers "
+	author: "icecool"
+	email: "qq987286912@163.com"
+	version: "0.0.1"
+)
+
+type courseAddrequest {
+	CourseName string `json:"courseName"`
+	CourseTag  string `json:"courseTag"`
+	TeacherId  int32  `json:"teacherId"`
+	ImgUrl     string `json:"imgUrl"`
+}
+
+type response {
+	Code    uint16 `json:"code"`
+	Message string `json:"message"`
+	Res     bool   `json:"res"`
+}
+
+type courseImg {
+	File string `form:"file"`
+}
+
+@server(
+	
+	prefix : /course
+)
+service courseApi {
+	@handler addCourse
+	post /addCourse (courseAddrequest) returns (response)
+	
+	@handler addCourseImg
+	post /addCourseImg (courseImg) returns (response)
+	
+}

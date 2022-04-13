@@ -20,4 +20,6 @@ type Course struct {
 	CourseVideoNumBer int `gorm:"column:course_video_number"`
 	//视频审核状态
 	CourseStatus bool `gorm:"column:course_status"`
+	// 课程封面
+	CourseImg string `gorm:"column:course_img"`
 }

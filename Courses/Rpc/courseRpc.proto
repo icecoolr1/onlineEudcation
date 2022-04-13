@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package Rpc;
+option go_package = "./Rpc";
+
+message CourseAddReq {
+  string courseName = 1;
+  int32 teacherId = 2;
+  string imgUrl = 3;
+  string courseType = 4;
+}
+
+message CourseResp {
+  string msg = 1;
+  int32 code = 2;
+  bool res = 3;
+}
+
+service courseRpc {
+  rpc AddCourse(CourseAddReq) returns (CourseResp);
+
+}

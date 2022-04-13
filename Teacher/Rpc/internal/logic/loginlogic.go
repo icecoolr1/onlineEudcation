@@ -2,8 +2,9 @@ package logic
 
 import (
 	"context"
+	"errors"
 	"github.com/zeromicro/go-zero/core/logx"
-	"onlineEudcation/Teacher/Dao"
+	dao "onlineEudcation/Teacher/Dao"
 	"onlineEudcation/Teacher/Rpc/Rpc"
 	"onlineEudcation/Teacher/Rpc/internal/svc"
 	"onlineEudcation/Teacher/etity"
@@ -19,8 +20,6 @@ type LoginLogic struct {
 	logx.Logger
 }
 
-var teacherDao dao.TeacherInterface = new(dao.TeacherDao)
-
 func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic {
 	return &LoginLogic{
 		ctx:    ctx,
@@ -29,17 +28,18 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 	}
 }
 
+var teacherDao dao.TeacherInterface = new(dao.TeacherDao)
+
 // Login 教师登录功能实现 寻找邮箱是否存在，接着判断密码是否正确
 func (l *LoginLogic) Login(in *Rpc.TeacherLoginInfo) (*Rpc.LoginResponse, error) {
-	var mysqlDB = scripts.GetDatabaseConnection()
 	// 寻找邮箱是否存在
-	var teacher etity.Teacher
+	var teacher *etity.Teacher
 	var rMsg *Rpc.Teacher
-	result := mysqlDB.Where("t_email = ? ", in.TeacherEmail).First(&teacher)
+	teacher, err := teacherDao.FindTeacherByEmail(in.TeacherEmail)
 	//返回不为空
-	if result.Error != nil {
+	if err != nil {
 		rMsg = nil
-		return &Rpc.LoginResponse{Code: 400, Res: false, Message: "邮箱不存在", Teacher: rMsg}, nil
+		return &Rpc.LoginResponse{Code: 400, Res: false, Message: "邮箱不存在", Teacher: rMsg}, errors.New("邮箱不存在")
 	} else {
 		//正确
 		teacherinfo := Rpc.Teacher{Id: int32(teacher.ID), Password: teacher.Password, Email: teacher.Email, Name: teacher.Name}
@@ -54,7 +54,7 @@ func (l *LoginLogic) Login(in *Rpc.TeacherLoginInfo) (*Rpc.LoginResponse, error)
 			return &Rpc.LoginResponse{Res: true, Code: 200, Message: "OK", Teacher: &teacherinfo}, nil
 		} else {
 			rMsg = nil
-			return &Rpc.LoginResponse{Code: 400, Res: false, Message: "密码错误", Teacher: rMsg}, nil
+			return &Rpc.LoginResponse{Code: 400, Res: false, Message: "密码错误", Teacher: rMsg}, errors.New("密码错误")
 		}
 	}
 }

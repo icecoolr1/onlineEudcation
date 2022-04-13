@@ -42,7 +42,7 @@ func (l *TRegisterLogic) TRegister(req types.TeacherInfoForRegister) (resp *type
 		return &types.TeacherResponse{
 			Code:    400,
 			Res:     false,
-			Message: "注册失败",
+			Message: "邮箱已被注册",
 		}, err
 	}
 }

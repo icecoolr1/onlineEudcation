@@ -11,12 +11,15 @@ type TeacherDao struct{}
 var users []etity.Teacher
 var DB = scripts.GetDatabaseConnection()
 
-func (t TeacherDao) AddTeacher(teacher []etity.Teacher) bool {
+func (t TeacherDao) AddTeacher(teacher []etity.Teacher) (bool, error) {
 	for _, e := range teacher {
 		fmt.Printf("%v\n", e)
-		DB.Create(&e)
+		create := DB.Create(&e)
+		if create.Error != nil {
+			return false, create.Error
+		}
 	}
-	return true
+	return true, nil
 }
 
 func (t TeacherDao) DelTeacher(id []int) bool {
@@ -43,4 +46,14 @@ func (t TeacherDao) FindTeacherByName(name string) []etity.Teacher {
 func (t TeacherDao) FindAllTeachers() []etity.Teacher {
 	DB.Find(&users)
 	return users
+}
+
+func (t TeacherDao) FindTeacherByEmail(email string) (*etity.Teacher, error) {
+	teacher := etity.Teacher{}
+	res := DB.Where("t_email = ?", email).First(&teacher)
+	if res.Error != nil {
+		return nil, res.Error
+	} else {
+		return &teacher, nil
+	}
 }

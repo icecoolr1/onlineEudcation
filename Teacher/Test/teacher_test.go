@@ -36,5 +36,13 @@ func TestLike(t *testing.T) {
 	for _, teacher := range teachers {
 		fmt.Println(teacher)
 	}
+}
 
+func TestEmail(t *testing.T) {
+	teacher, err := teacherDao.FindTeacherByEmail("nil")
+	if err != nil {
+		fmt.Println("查询失败")
+	} else {
+		fmt.Println(*teacher)
+	}
 }
