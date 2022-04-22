@@ -3,15 +3,16 @@ package main
 import (
 	"flag"
 	"fmt"
-	"onlineEudcation/Courses/Api/internal/config"
-	"onlineEudcation/Courses/Api/internal/handler"
-	"onlineEudcation/Courses/Api/internal/svc"
+
+	"onlineEudcation/Vedio/api/internal/config"
+	"onlineEudcation/Vedio/api/internal/handler"
+	"onlineEudcation/Vedio/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"
 )
 
-var configFile = flag.String("f", "etc/courseapi.yaml", "the config file")
+var configFile = flag.String("f", "etc/videoapi.yaml", "the config file")
 
 func main() {
 	flag.Parse()
@@ -24,7 +25,6 @@ func main() {
 	defer server.Stop()
 
 	handler.RegisterHandlers(server, ctx)
-	//test
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()

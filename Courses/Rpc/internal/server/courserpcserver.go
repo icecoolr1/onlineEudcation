@@ -26,3 +26,13 @@ func (s *CourseRpcServer) AddCourse(ctx context.Context, in *Rpc.CourseAddReq) (
 	l := logic.NewAddCourseLogic(ctx, s.svcCtx)
 	return l.AddCourse(in)
 }
+
+func (s *CourseRpcServer) DeleteCourse(ctx context.Context, in *Rpc.DeleteCourseReq) (*Rpc.DeleteCourseResp, error) {
+	l := logic.NewDeleteCourseLogic(ctx, s.svcCtx)
+	return l.DeleteCourse(in)
+}
+
+func (s *CourseRpcServer) UpdateCourse(ctx context.Context, in *Rpc.UpdateCourseReq) (*Rpc.CourseResp, error) {
+	l := logic.NewUpdateCourseLogic(ctx, s.svcCtx)
+	return l.UpdateCourse(in)
+}

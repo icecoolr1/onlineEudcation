@@ -9,21 +9,42 @@ import (
 
 func main() {
 	r := gin.Default() //启动gin路由，携带基础中间件启动 logger and recovery (crash-free) 中间件
-	r.Use(CORSMiddleware())
-	r.POST("testUpload", func(c *gin.Context) {
+	//r.Use(CORSMiddleware())
+	r.POST("upload/courseImg", func(c *gin.Context) {
 		must := uuid.NewV4().String()
 		fmt.Println(must)
 		file, _ := c.FormFile("file")
 		filename := file.Filename
 		fmt.Println(filename, "test")
-		fileLocation := "d:/images/" + must + ".jpg"
+		fileLocation := "/media/courseImgs/" + must + ".jpg"
+		//访问地址
+		proxyLocation := "http://124.221.155.122/resource/courseImgs/" + must + ".jpg"
 		err := c.SaveUploadedFile(file, fileLocation)
 		if err != nil {
 			return
 		}
 		c.JSON(200, gin.H{
 			"msg":          file,
-			"fileLocation": fileLocation,
+			"fileLocation": proxyLocation,
+		})
+	})
+
+	r.POST("upload/videos", func(c *gin.Context) {
+		must := uuid.NewV4().String()
+		fmt.Println(must)
+		file, _ := c.FormFile("file")
+		filename := file.Filename
+		fmt.Println(filename, "test")
+		fileLocation := "/media/videos/" + must + ".avi"
+		//访问地址
+		proxyLocation := "http://124.221.155.122/resource/videos/" + must + ".avi"
+		err := c.SaveUploadedFile(file, fileLocation)
+		if err != nil {
+			return
+		}
+		c.JSON(200, gin.H{
+			"msg":          file,
+			"fileLocation": proxyLocation,
 		})
 	})
 	r.Run(":1010") // listen and serve on 0.0.0.0:8080

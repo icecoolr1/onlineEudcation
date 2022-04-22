@@ -13,8 +13,7 @@ type Video struct {
 	VideoPlaySum int32 `gorm:"column:video_play_sum"`
 	//视频名称
 	VideoName string `gorm:"column:video_name"`
-	//视频图片文件系统位置
-	VideoImagePath string `gorm:"column:video_imag_path"`
+
 	//视频顺序
 	VideoSeq int32 `gorm:"column:video_seq"`
 }

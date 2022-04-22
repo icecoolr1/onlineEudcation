@@ -13,11 +13,16 @@ import (
 )
 
 type (
-	CourseAddReq = Rpc.CourseAddReq
-	CourseResp   = Rpc.CourseResp
+	CourseAddReq     = Rpc.CourseAddReq
+	CourseResp       = Rpc.CourseResp
+	DeleteCourseReq  = Rpc.DeleteCourseReq
+	DeleteCourseResp = Rpc.DeleteCourseResp
+	UpdateCourseReq  = Rpc.UpdateCourseReq
 
 	CourseRpc interface {
 		AddCourse(ctx context.Context, in *CourseAddReq, opts ...grpc.CallOption) (*CourseResp, error)
+		DeleteCourse(ctx context.Context, in *DeleteCourseReq, opts ...grpc.CallOption) (*DeleteCourseResp, error)
+		UpdateCourse(ctx context.Context, in *UpdateCourseReq, opts ...grpc.CallOption) (*CourseResp, error)
 	}
 
 	defaultCourseRpc struct {
@@ -34,4 +39,14 @@ func NewCourseRpc(cli zrpc.Client) CourseRpc {
 func (m *defaultCourseRpc) AddCourse(ctx context.Context, in *CourseAddReq, opts ...grpc.CallOption) (*CourseResp, error) {
 	client := Rpc.NewCourseRpcClient(m.cli.Conn())
 	return client.AddCourse(ctx, in, opts...)
+}
+
+func (m *defaultCourseRpc) DeleteCourse(ctx context.Context, in *DeleteCourseReq, opts ...grpc.CallOption) (*DeleteCourseResp, error) {
+	client := Rpc.NewCourseRpcClient(m.cli.Conn())
+	return client.DeleteCourse(ctx, in, opts...)
+}
+
+func (m *defaultCourseRpc) UpdateCourse(ctx context.Context, in *UpdateCourseReq, opts ...grpc.CallOption) (*CourseResp, error) {
+	client := Rpc.NewCourseRpcClient(m.cli.Conn())
+	return client.UpdateCourse(ctx, in, opts...)
 }

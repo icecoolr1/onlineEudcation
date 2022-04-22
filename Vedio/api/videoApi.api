@@ -1,0 +1,46 @@
+syntax = "v1"
+
+type AddVideoReq {
+	Video
+}
+
+type AddVideoRes {
+	Code    int32  `json:"code"`
+	Message string `json:"message"`
+	Res     bool   `json:"res"`
+}
+
+type Video {
+	CourseId     int32  `json:"courseId"`
+	VideoFileUrl string `json:"videoFileUrl"`
+	VideoPlaySum int32  `json:"videoPlaySum"`
+	VideoName    string `json:"videoName"`
+	VideoSeq     int32  `json:"videoSeq"`
+	VedioId      int32  `json:"vedioId"`
+}
+
+type FindCourseVideosReq {
+	CourseId int32 `json:"courseId"`
+}
+
+type FindCourseVideosRes {
+	Code   int32   `json:"code"`
+	Videos []Video `json:"videos"`
+}
+
+type DeleteVideoReq {
+	VideoId int32 `json:"videoId"`
+}
+
+@server(
+	
+	prefix : /video
+)
+service videoApi {
+	@handler findCourseVideos
+	post /findCourseVideos (FindCourseVideosReq) returns (FindCourseVideosRes)
+	@handler addVideo
+	post /addVideo (AddVideoReq) returns (AddVideoRes)
+	@handler deleteVideo
+	post /deleteVideo (DeleteVideoReq) returns (AddVideoRes)
+}

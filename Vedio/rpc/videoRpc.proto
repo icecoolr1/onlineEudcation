@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package rpc;
+option go_package = "./rpc";
+
+message DelVideoReq {
+  int64 video_id = 1;
+}
+
+message AddVideoRequest {
+  int32 courseId = 1;
+  string videoFileUrl = 2;
+  string videoName = 3;
+  int32 videoSeq = 4;
+}
+
+message AddVideoResponse {
+  string message = 1;
+  int32 code = 2;
+}
+
+message UpdateVideoRequest {
+  int64 videoId = 1;
+  string videoFileUrl = 2;
+  string videoName = 3;
+  int32 videoSeq = 4;
+}
+
+service VideoService {
+  rpc AddVideo(AddVideoRequest) returns (AddVideoResponse);
+  rpc DelVideo(DelVideoReq) returns (AddVideoResponse);
+  rpc UpdateVideo(UpdateVideoRequest) returns (AddVideoResponse);
+}

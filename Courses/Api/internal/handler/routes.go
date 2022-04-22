@@ -27,6 +27,21 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/searchCourseById",
 				Handler: searchCourseByIdHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/delCourse",
+				Handler: delCourseHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/findCourseByCourseId",
+				Handler: findCourseByCourseIdHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/updateCourseInfo",
+				Handler: updateCourseInfoHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/course"),
 	)

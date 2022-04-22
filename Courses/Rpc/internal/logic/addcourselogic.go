@@ -11,7 +11,7 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-var courseDao Dao.CourseDaoInterface = new(Dao.CourseDao)
+var CourseDao Dao.CourseDaoInterface = new(Dao.CourseDao)
 
 type AddCourseLogic struct {
 	ctx    context.Context
@@ -38,7 +38,7 @@ func (l *AddCourseLogic) AddCourse(in *Rpc.CourseAddReq) (*Rpc.CourseResp, error
 		CourseStatus:      false,
 		CourseImg:         in.ImgUrl,
 	})
-	courseDao.AddCourse(courseList)
+	CourseDao.AddCourse(courseList)
 
 	return &Rpc.CourseResp{
 		Msg:  "成功",

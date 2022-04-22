@@ -7,6 +7,11 @@ info(
 	email: "qq987286912@163.com"
 	version: "0.0.1"
 )
+
+type FindCourseByCourseId {
+	CourseId int `json:"courseId"`
+}
+
 type SearchCourseByIdReq {
 	TeacherId int32 `json:"teacherId"`
 }
@@ -21,13 +26,22 @@ type SearchCourseByIdItem {
 	CourseVideoNumBer int32  `json:"courseVideoNumBer"`
 }
 type SearchCourseByIdRes {
+	Code       int32                  `json:"code"`
 	CourseList []SearchCourseByIdItem `json:"courseList"`
+	Res        bool                   `json:"res"`
 }
 
 type courseAddrequest {
 	CourseName string `json:"courseName"`
 	CourseTag  string `json:"courseTag"`
 	TeacherId  int32  `json:"teacherId"`
+	ImgUrl     string `json:"imgUrl"`
+}
+
+type UpdateCourseInfoReq {
+	CourseId   int32  `json:"courseId"`
+	CourseName string `json:"courseName"`
+	CourseTag  string `json:"courseTag"`
 	ImgUrl     string `json:"imgUrl"`
 }
 
@@ -39,6 +53,17 @@ type response {
 
 type courseImg {
 	File string `form:"file"`
+}
+
+type DelCourseReq {
+	CourseId  int32 `json:"courseId"`
+	TeacherId int32 `json:"teacherId"`
+}
+type DelCourseRes {
+	// 返回结果代码
+	Code int32 `json:"code"`
+	// 返回新的课程列表
+	CourseList []SearchCourseByIdItem `json:"courseList"`
 }
 
 @server(
@@ -54,5 +79,14 @@ service courseApi {
 	
 	@handler searchCourseById
 	post /searchCourseById (SearchCourseByIdReq) returns (SearchCourseByIdRes)
+	
+	@handler delCourse
+	post /delCourse (DelCourseReq) returns (DelCourseRes)
+	
+	@handler findCourseByCourseId
+	post /findCourseByCourseId (FindCourseByCourseId) returns (SearchCourseByIdItem)
+	
+	@handler updateCourseInfo
+	post /updateCourseInfo (UpdateCourseInfoReq) returns (response)
 	
 }

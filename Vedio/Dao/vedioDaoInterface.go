@@ -13,4 +13,6 @@ type VideoDaoInterface interface {
 	FindVideo(videoName string) []Etity.Video
 	// FindAllVideo 查询所有视频
 	FindAllVideo() []Etity.Video
+
+	FindVideoByCourseId(courseId int) []Etity.Video
 }

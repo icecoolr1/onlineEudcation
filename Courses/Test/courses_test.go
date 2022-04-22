@@ -20,6 +20,7 @@ func TestAddCourse(t *testing.T) {
 		CourseVideoNumBer: 10,
 		CourseStatus:      false,
 	}
+	// 添加至列表
 	courseList = append(courseList, course)
 	courseDao.AddCourse(courseList)
 }
@@ -30,13 +31,12 @@ func TestDelCourse(t *testing.T) {
 
 func TestUpdate(t *testing.T) {
 	course := Etity.Course{
-		Model:             gorm.Model{ID: 2},
-		CourseName:        "test",
-		TeacherId:         1,
-		CourseTag:         "数学",
-		CoursePlaySum:     0,
-		CourseVideoNumBer: 10,
-		CourseStatus:      false,
+		Model:      gorm.Model{ID: 13},
+		CourseName: "test",
+
+		CourseTag: "数学",
+
+		CourseStatus: false,
 	}
 	courseDao.UpdateCourse(course)
 }
@@ -47,6 +47,6 @@ func TestFindAll(t *testing.T) {
 }
 
 func TestFindBytID(t *testing.T) {
-	courselist := courseDao.FindCourseByTeacherId(36)
+	courselist := courseDao.FindCourseByTeacherId(37)
 	fmt.Println("courselist:", courselist)
 }

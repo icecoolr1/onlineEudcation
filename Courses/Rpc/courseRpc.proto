@@ -9,6 +9,13 @@ message CourseAddReq {
   string imgUrl = 3;
   string courseType = 4;
 }
+message UpdateCourseReq {
+  int32 courseId = 1;
+  string courseName = 2;
+  string imgUrl = 3;
+  string courseType = 4;
+}
+
 
 message CourseResp {
   string msg = 1;
@@ -16,7 +23,17 @@ message CourseResp {
   bool res = 3;
 }
 
+message DeleteCourseReq {
+  int32 courseId = 1;
+}
+message DeleteCourseResp {
+  string msg = 1;
+  int32 code = 2;
+  bool res = 3;
+}
+
 service courseRpc {
   rpc AddCourse(CourseAddReq) returns (CourseResp);
-
+  rpc DeleteCourse(DeleteCourseReq) returns (DeleteCourseResp);
+  rpc UpdateCourse(UpdateCourseReq) returns (CourseResp);
 }

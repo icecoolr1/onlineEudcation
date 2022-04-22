@@ -19,6 +19,8 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CourseRpcClient interface {
 	AddCourse(ctx context.Context, in *CourseAddReq, opts ...grpc.CallOption) (*CourseResp, error)
+	DeleteCourse(ctx context.Context, in *DeleteCourseReq, opts ...grpc.CallOption) (*DeleteCourseResp, error)
+	UpdateCourse(ctx context.Context, in *UpdateCourseReq, opts ...grpc.CallOption) (*CourseResp, error)
 }
 
 type courseRpcClient struct {
@@ -38,11 +40,31 @@ func (c *courseRpcClient) AddCourse(ctx context.Context, in *CourseAddReq, opts 
 	return out, nil
 }
 
+func (c *courseRpcClient) DeleteCourse(ctx context.Context, in *DeleteCourseReq, opts ...grpc.CallOption) (*DeleteCourseResp, error) {
+	out := new(DeleteCourseResp)
+	err := c.cc.Invoke(ctx, "/Rpc.courseRpc/DeleteCourse", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *courseRpcClient) UpdateCourse(ctx context.Context, in *UpdateCourseReq, opts ...grpc.CallOption) (*CourseResp, error) {
+	out := new(CourseResp)
+	err := c.cc.Invoke(ctx, "/Rpc.courseRpc/UpdateCourse", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CourseRpcServer is the server API for CourseRpc service.
 // All implementations must embed UnimplementedCourseRpcServer
 // for forward compatibility
 type CourseRpcServer interface {
 	AddCourse(context.Context, *CourseAddReq) (*CourseResp, error)
+	DeleteCourse(context.Context, *DeleteCourseReq) (*DeleteCourseResp, error)
+	UpdateCourse(context.Context, *UpdateCourseReq) (*CourseResp, error)
 	mustEmbedUnimplementedCourseRpcServer()
 }
 
@@ -52,6 +74,12 @@ type UnimplementedCourseRpcServer struct {
 
 func (UnimplementedCourseRpcServer) AddCourse(context.Context, *CourseAddReq) (*CourseResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddCourse not implemented")
+}
+func (UnimplementedCourseRpcServer) DeleteCourse(context.Context, *DeleteCourseReq) (*DeleteCourseResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCourse not implemented")
+}
+func (UnimplementedCourseRpcServer) UpdateCourse(context.Context, *UpdateCourseReq) (*CourseResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCourse not implemented")
 }
 func (UnimplementedCourseRpcServer) mustEmbedUnimplementedCourseRpcServer() {}
 
@@ -84,6 +112,42 @@ func _CourseRpc_AddCourse_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CourseRpc_DeleteCourse_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCourseReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CourseRpcServer).DeleteCourse(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Rpc.courseRpc/DeleteCourse",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CourseRpcServer).DeleteCourse(ctx, req.(*DeleteCourseReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CourseRpc_UpdateCourse_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCourseReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CourseRpcServer).UpdateCourse(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Rpc.courseRpc/UpdateCourse",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CourseRpcServer).UpdateCourse(ctx, req.(*UpdateCourseReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CourseRpc_ServiceDesc is the grpc.ServiceDesc for CourseRpc service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -94,6 +158,14 @@ var CourseRpc_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddCourse",
 			Handler:    _CourseRpc_AddCourse_Handler,
+		},
+		{
+			MethodName: "DeleteCourse",
+			Handler:    _CourseRpc_DeleteCourse_Handler,
+		},
+		{
+			MethodName: "UpdateCourse",
+			Handler:    _CourseRpc_UpdateCourse_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
