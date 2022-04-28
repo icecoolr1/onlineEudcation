@@ -37,14 +37,14 @@ func main() {
 		fmt.Println(filename, "test")
 		fileLocation := "/media/videos/" + must + ".avi"
 		//访问地址
-		proxyLocation := "http://124.221.155.122/resource/videos/" + must + ".avi"
+		//proxyLocation := "http://124.221.155.122/resource/videos/" + must + ".avi"
 		err := c.SaveUploadedFile(file, fileLocation)
 		if err != nil {
 			return
 		}
 		c.JSON(200, gin.H{
 			"msg":          file,
-			"fileLocation": proxyLocation,
+			"fileLocation": must,
 		})
 	})
 	r.Run(":1010") // listen and serve on 0.0.0.0:8080

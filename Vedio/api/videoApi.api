@@ -29,7 +29,16 @@ type FindCourseVideosRes {
 }
 
 type DeleteVideoReq {
+	VideoId  int32 `json:"videoId"`
+	CourseId int32 `json:"courseId"`
+}
+
+type FindVideoByIdReq {
 	VideoId int32 `json:"videoId"`
+}
+type FindVideoByIdRes {
+	Code      int32 `json:"code"`
+	VideoInfo Video `json:"video"`
 }
 
 @server(
@@ -42,5 +51,9 @@ service videoApi {
 	@handler addVideo
 	post /addVideo (AddVideoReq) returns (AddVideoRes)
 	@handler deleteVideo
-	post /deleteVideo (DeleteVideoReq) returns (AddVideoRes)
+	post /deleteVideo (DeleteVideoReq) returns (FindCourseVideosRes)
+	@handler updateVideo
+	post /updateVideo (AddVideoReq) returns (AddVideoRes)
+	@handler findVideoById
+	post /findVideoById (FindVideoByIdReq) returns (FindVideoByIdRes)
 }

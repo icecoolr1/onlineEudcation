@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package rpc;
+option go_package = "./rpc";
+
+message Student{
+  string sName = 1;
+  string sEmail = 2;
+  string sPassword = 3;
+}
+
+message StudentAddReq{
+   Student student = 1;
+}
+
+message StudentAddRes{
+   int32 code = 1;
+}
+
+service studentRpc {
+  rpc AddStudent(StudentAddReq) returns (StudentAddRes);
+}

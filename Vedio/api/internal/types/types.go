@@ -30,5 +30,15 @@ type FindCourseVideosRes struct {
 }
 
 type DeleteVideoReq struct {
+	VideoId  int32 `json:"videoId"`
+	CourseId int32 `json:"courseId"`
+}
+
+type FindVideoByIdReq struct {
 	VideoId int32 `json:"videoId"`
+}
+
+type FindVideoByIdRes struct {
+	Code      int32 `json:"code"`
+	VideoInfo Video `json:"video"`
 }

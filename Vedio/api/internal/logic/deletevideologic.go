@@ -24,15 +24,25 @@ func NewDeleteVideoLogic(ctx context.Context, svcCtx *svc.ServiceContext) Delete
 	}
 }
 
-func (l *DeleteVideoLogic) DeleteVideo(req types.DeleteVideoReq) (resp *types.AddVideoRes, err error) {
+func (l *DeleteVideoLogic) DeleteVideo(req types.DeleteVideoReq) (resp *types.FindCourseVideosRes, err error) {
 	_, err = l.svcCtx.VideoRpc.DelVideo(l.ctx, &rpc.DelVideoReq{VideoId: int64(req.VideoId)})
 	if err != nil {
 		return nil, err
 	} else {
-		return &types.AddVideoRes{
-			Code:    200,
-			Message: "success",
-			Res:     true,
+		videoList := make([]types.Video, 0)
+		videos := videoDao.FindVideoByCourseId(int(req.CourseId))
+		for _, video := range videos {
+			videoList = append(videoList, types.Video{
+				VideoFileUrl: video.VideoFileUrl,
+				VideoPlaySum: video.VideoPlaySum,
+				VideoName:    video.VideoName,
+				VideoSeq:     video.VideoSeq,
+				VedioId:      int32(video.Model.ID),
+			})
+		}
+		return &types.FindCourseVideosRes{
+			Code:   200,
+			Videos: videoList,
 		}, nil
 	}
 

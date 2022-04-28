@@ -43,3 +43,9 @@ func (d VideoDao) FindVideoByCourseId(courseId int) []Etity.Video {
 	DB.Where("c_id = ?", courseId).Order("video_seq asc").Find(&videoList)
 	return videoList
 }
+
+func (d VideoDao) FindVideoByVideoId(videoId int) Etity.Video {
+	video := Etity.Video{}
+	DB.Where("id = ?", videoId).First(&video)
+	return video
+}

@@ -1,0 +1,8 @@
+Name: studentApi
+Host: 0.0.0.0
+Port: 8892
+StudentRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: studentrpc.rpc

@@ -15,4 +15,5 @@ type VideoDaoInterface interface {
 	FindAllVideo() []Etity.Video
 
 	FindVideoByCourseId(courseId int) []Etity.Video
+	FindVideoByVideoId(videoId int) Etity.Video
 }

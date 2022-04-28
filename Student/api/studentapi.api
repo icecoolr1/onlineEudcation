@@ -1,0 +1,36 @@
+syntax = "v1"
+
+type Student {
+	StudentId       int    `json:"sId"`
+	StudentName     string `json:"sName"`
+	StudentPassword string `json:"sPassword"`
+	StudentEmail    string `json:"sEmail"`
+}
+
+type StudentLoginReq {
+	StudentName     string `json:"sName"`
+	StudentPassword string `json:"sPassword"`
+}
+type StudentLoginRes {
+	Code    int    `json:"code"`
+	IsFirst bool   `json:"isFirst"`
+	Message string `json:"message"`
+}
+
+type StudentRegisterReq {
+	Student
+}
+type StudentRegisterRes {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}
+
+@server(
+	prefix: /student
+)
+service studentApi {
+	@handler studentLogin
+	post /studentLogin(StudentLoginReq) returns(StudentLoginRes)
+	@handler studentRegister
+	post /studentRegister(StudentRegisterReq) returns(StudentRegisterRes)
+}
