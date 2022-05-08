@@ -46,3 +46,9 @@ func TestEmail(t *testing.T) {
 		fmt.Println(*teacher)
 	}
 }
+
+func TestId(t *testing.T) {
+	teacher := teacherDao.FindTeacherNameById(36)
+	fmt.Println(teacher)
+
+}

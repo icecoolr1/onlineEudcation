@@ -14,6 +14,7 @@ import (
 
 type (
 	CourseAddReq     = Rpc.CourseAddReq
+	CourseHitsReq    = Rpc.CourseHitsReq
 	CourseResp       = Rpc.CourseResp
 	DeleteCourseReq  = Rpc.DeleteCourseReq
 	DeleteCourseResp = Rpc.DeleteCourseResp
@@ -23,6 +24,7 @@ type (
 		AddCourse(ctx context.Context, in *CourseAddReq, opts ...grpc.CallOption) (*CourseResp, error)
 		DeleteCourse(ctx context.Context, in *DeleteCourseReq, opts ...grpc.CallOption) (*DeleteCourseResp, error)
 		UpdateCourse(ctx context.Context, in *UpdateCourseReq, opts ...grpc.CallOption) (*CourseResp, error)
+		CourseHits(ctx context.Context, in *CourseHitsReq, opts ...grpc.CallOption) (*CourseResp, error)
 	}
 
 	defaultCourseRpc struct {
@@ -49,4 +51,9 @@ func (m *defaultCourseRpc) DeleteCourse(ctx context.Context, in *DeleteCourseReq
 func (m *defaultCourseRpc) UpdateCourse(ctx context.Context, in *UpdateCourseReq, opts ...grpc.CallOption) (*CourseResp, error) {
 	client := Rpc.NewCourseRpcClient(m.cli.Conn())
 	return client.UpdateCourse(ctx, in, opts...)
+}
+
+func (m *defaultCourseRpc) CourseHits(ctx context.Context, in *CourseHitsReq, opts ...grpc.CallOption) (*CourseResp, error) {
+	client := Rpc.NewCourseRpcClient(m.cli.Conn())
+	return client.CourseHits(ctx, in, opts...)
 }

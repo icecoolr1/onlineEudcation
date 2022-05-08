@@ -1,5 +1,10 @@
 package logic
 
-import "onlineEudcation/Student/dao"
+import (
+	"onlineEudcation/Student/dao"
+	"onlineEudcation/Tools/scripts"
+)
 
-var stduentDao dao.StudentDaoInterface = new(dao.StudentDao)
+var studentDao dao.StudentDaoInterface = new(dao.StudentDao)
+var redis = scripts.GetRedis(1)
+var redis2 = scripts.GetRedis(2)

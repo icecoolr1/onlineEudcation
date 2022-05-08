@@ -26,7 +26,7 @@ func NewStudentRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) St
 
 func (l *StudentRegisterLogic) StudentRegister(req types.StudentRegisterReq) (resp *types.StudentRegisterRes, err error) {
 	// 用户名不可重复
-	_, err = stduentDao.FindStudentByName(req.StudentName)
+	_, err = studentDao.FindStudentByName(req.StudentName)
 	if err != nil {
 		_, err = l.svcCtx.StudentRpc.AddStudent(l.ctx, &rpc.StudentAddReq{
 			Student: &rpc.Student{

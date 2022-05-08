@@ -22,6 +22,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/studentRegister",
 				Handler: studentRegisterHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/sendChosenTags",
+				Handler: sendChosenTagsHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/student"),
 	)

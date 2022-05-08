@@ -50,3 +50,18 @@ func TestFindBytID(t *testing.T) {
 	courselist := courseDao.FindCourseByTeacherId(37)
 	fmt.Println("courselist:", courselist)
 }
+func TestSearch(t *testing.T) {
+	list := courseDao.GetCourseList("golang")
+	fmt.Println("list:", list)
+}
+
+func TestRecommend(t *testing.T) {
+	list := courseDao.GetRecommendCourseList()
+	fmt.Println("list:", list)
+	fmt.Println(len(list))
+}
+
+func TestHits(t *testing.T) {
+	courseDao.CourseHits(10)
+
+}

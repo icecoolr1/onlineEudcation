@@ -42,6 +42,26 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/updateCourseInfo",
 				Handler: updateCourseInfoHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/getCourseList",
+				Handler: getCourseListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/getRecommendCourseList",
+				Handler: getRecommendCourseListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/courseHits",
+				Handler: courseHitsHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/searchCourseByName",
+				Handler: searchCourseByNameHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/course"),
 	)

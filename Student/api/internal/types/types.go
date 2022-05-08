@@ -27,3 +27,13 @@ type StudentRegisterRes struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 }
+
+type SendChosenTags struct {
+	Tags        []string `json:"tags"`
+	StudentName string   `json:"sName"`
+}
+
+type Response struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}

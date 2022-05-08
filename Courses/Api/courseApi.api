@@ -25,6 +25,16 @@ type SearchCourseByIdItem {
 	CoursePlaySum     int32  `json:"coursePlaySum"`
 	CourseVideoNumBer int32  `json:"courseVideoNumBer"`
 }
+type SearchCourseByIdItemByStudent {
+	CourseId          int32  `json:"courseId"`
+	CourseName        string `json:"courseName"`
+	CourseImg         string `json:"courseImg"`
+	CourseType        string `json:"courseType"`
+	CourseStatus      bool   `json:"courseStatus"`
+	CoursePlaySum     int32  `json:"coursePlaySum"`
+	CourseVideoNumBer int32  `json:"courseVideoNumBer"`
+	TeacherName       string `json:"teacherName"`
+}
 type SearchCourseByIdRes {
 	Code       int32                  `json:"code"`
 	CourseList []SearchCourseByIdItem `json:"courseList"`
@@ -66,6 +76,37 @@ type DelCourseRes {
 	CourseList []SearchCourseByIdItem `json:"courseList"`
 }
 
+type GetCourseListReq {
+	Tag string `json:"tag"`
+}
+type GetCourseListRes {
+	Code int `json:"code"`
+	// 返回新的课程列表
+	CourseList []SearchCourseByIdItemByStudent `json:"courseList"`
+}
+
+type GetRecommendCourseListReq {
+	StudentId int `json:"studentId"`
+}
+type GetRecommendCourseListRes {
+	Code int `json:"code"`
+	// 返回新的课程列表
+	CourseList []SearchCourseByIdItemByStudent `json:"courseList"`
+}
+
+type CourseHitsReq {
+	CourseId int `json:"courseId"`
+}
+
+type SearchCourseByNameReq {
+	Text string `json:"text"`
+}
+type SearchCourseByNameRes {
+	Code int `json:"code"`
+	// 返回新的课程列表
+	CourseList []SearchCourseByIdItem `json:"courseList"`
+}
+
 @server(
 	
 	prefix : /course
@@ -88,5 +129,17 @@ service courseApi {
 	
 	@handler updateCourseInfo
 	post /updateCourseInfo (UpdateCourseInfoReq) returns (response)
+	
+	@handler getCourseList
+	post /getCourseList (GetCourseListReq) returns (GetCourseListRes)
+	
+	@handler getRecommendCourseList
+	post /getRecommendCourseList (GetRecommendCourseListReq) returns (GetRecommendCourseListRes)
+	
+	@handler courseHits
+	post /courseHits (CourseHitsReq) returns (response)
+	
+	@handler searchCourseByName
+	post /searchCourseByName (SearchCourseByNameReq) returns (SearchCourseByNameRes)
 	
 }

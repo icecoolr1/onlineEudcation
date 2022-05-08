@@ -21,6 +21,7 @@ type CourseRpcClient interface {
 	AddCourse(ctx context.Context, in *CourseAddReq, opts ...grpc.CallOption) (*CourseResp, error)
 	DeleteCourse(ctx context.Context, in *DeleteCourseReq, opts ...grpc.CallOption) (*DeleteCourseResp, error)
 	UpdateCourse(ctx context.Context, in *UpdateCourseReq, opts ...grpc.CallOption) (*CourseResp, error)
+	CourseHits(ctx context.Context, in *CourseHitsReq, opts ...grpc.CallOption) (*CourseResp, error)
 }
 
 type courseRpcClient struct {
@@ -58,6 +59,15 @@ func (c *courseRpcClient) UpdateCourse(ctx context.Context, in *UpdateCourseReq,
 	return out, nil
 }
 
+func (c *courseRpcClient) CourseHits(ctx context.Context, in *CourseHitsReq, opts ...grpc.CallOption) (*CourseResp, error) {
+	out := new(CourseResp)
+	err := c.cc.Invoke(ctx, "/Rpc.courseRpc/CourseHits", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CourseRpcServer is the server API for CourseRpc service.
 // All implementations must embed UnimplementedCourseRpcServer
 // for forward compatibility
@@ -65,6 +75,7 @@ type CourseRpcServer interface {
 	AddCourse(context.Context, *CourseAddReq) (*CourseResp, error)
 	DeleteCourse(context.Context, *DeleteCourseReq) (*DeleteCourseResp, error)
 	UpdateCourse(context.Context, *UpdateCourseReq) (*CourseResp, error)
+	CourseHits(context.Context, *CourseHitsReq) (*CourseResp, error)
 	mustEmbedUnimplementedCourseRpcServer()
 }
 
@@ -80,6 +91,9 @@ func (UnimplementedCourseRpcServer) DeleteCourse(context.Context, *DeleteCourseR
 }
 func (UnimplementedCourseRpcServer) UpdateCourse(context.Context, *UpdateCourseReq) (*CourseResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCourse not implemented")
+}
+func (UnimplementedCourseRpcServer) CourseHits(context.Context, *CourseHitsReq) (*CourseResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CourseHits not implemented")
 }
 func (UnimplementedCourseRpcServer) mustEmbedUnimplementedCourseRpcServer() {}
 
@@ -148,6 +162,24 @@ func _CourseRpc_UpdateCourse_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CourseRpc_CourseHits_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CourseHitsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CourseRpcServer).CourseHits(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Rpc.courseRpc/CourseHits",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CourseRpcServer).CourseHits(ctx, req.(*CourseHitsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CourseRpc_ServiceDesc is the grpc.ServiceDesc for CourseRpc service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -166,6 +198,10 @@ var CourseRpc_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateCourse",
 			Handler:    _CourseRpc_UpdateCourse_Handler,
+		},
+		{
+			MethodName: "CourseHits",
+			Handler:    _CourseRpc_CourseHits_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

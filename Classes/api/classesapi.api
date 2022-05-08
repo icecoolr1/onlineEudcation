@@ -1,0 +1,19 @@
+syntax = "v1"
+
+type AddClassRequest {
+	StudentId int `json:"studentId"`
+	CourseId  int `json:"courseId"`
+}
+
+type response {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}
+
+@server(
+	prefix : /classes
+)
+service classapi {
+	@handler AddClass
+	post /addClass(AddClassRequest) returns (response)
+}

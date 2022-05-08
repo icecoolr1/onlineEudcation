@@ -73,3 +73,8 @@ func TestFindByVideoId(t *testing.T) {
 	video := videoDao.FindVideoByVideoId(11)
 	fmt.Println(video)
 }
+
+func TestHits(t *testing.T) {
+	videoDao.VideoHits(6)
+
+}

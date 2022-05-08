@@ -21,6 +21,7 @@ type VideoServiceClient interface {
 	AddVideo(ctx context.Context, in *AddVideoRequest, opts ...grpc.CallOption) (*AddVideoResponse, error)
 	DelVideo(ctx context.Context, in *DelVideoReq, opts ...grpc.CallOption) (*AddVideoResponse, error)
 	UpdateVideo(ctx context.Context, in *UpdateVideoRequest, opts ...grpc.CallOption) (*AddVideoResponse, error)
+	VideoHits(ctx context.Context, in *VideoHitsReq, opts ...grpc.CallOption) (*AddVideoResponse, error)
 }
 
 type videoServiceClient struct {
@@ -58,6 +59,15 @@ func (c *videoServiceClient) UpdateVideo(ctx context.Context, in *UpdateVideoReq
 	return out, nil
 }
 
+func (c *videoServiceClient) VideoHits(ctx context.Context, in *VideoHitsReq, opts ...grpc.CallOption) (*AddVideoResponse, error) {
+	out := new(AddVideoResponse)
+	err := c.cc.Invoke(ctx, "/rpc.VideoService/VideoHits", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VideoServiceServer is the server API for VideoService service.
 // All implementations must embed UnimplementedVideoServiceServer
 // for forward compatibility
@@ -65,6 +75,7 @@ type VideoServiceServer interface {
 	AddVideo(context.Context, *AddVideoRequest) (*AddVideoResponse, error)
 	DelVideo(context.Context, *DelVideoReq) (*AddVideoResponse, error)
 	UpdateVideo(context.Context, *UpdateVideoRequest) (*AddVideoResponse, error)
+	VideoHits(context.Context, *VideoHitsReq) (*AddVideoResponse, error)
 	mustEmbedUnimplementedVideoServiceServer()
 }
 
@@ -80,6 +91,9 @@ func (UnimplementedVideoServiceServer) DelVideo(context.Context, *DelVideoReq) (
 }
 func (UnimplementedVideoServiceServer) UpdateVideo(context.Context, *UpdateVideoRequest) (*AddVideoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateVideo not implemented")
+}
+func (UnimplementedVideoServiceServer) VideoHits(context.Context, *VideoHitsReq) (*AddVideoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VideoHits not implemented")
 }
 func (UnimplementedVideoServiceServer) mustEmbedUnimplementedVideoServiceServer() {}
 
@@ -148,6 +162,24 @@ func _VideoService_UpdateVideo_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VideoService_VideoHits_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VideoHitsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VideoServiceServer).VideoHits(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpc.VideoService/VideoHits",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VideoServiceServer).VideoHits(ctx, req.(*VideoHitsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // VideoService_ServiceDesc is the grpc.ServiceDesc for VideoService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -166,6 +198,10 @@ var VideoService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateVideo",
 			Handler:    _VideoService_UpdateVideo_Handler,
+		},
+		{
+			MethodName: "VideoHits",
+			Handler:    _VideoService_VideoHits_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

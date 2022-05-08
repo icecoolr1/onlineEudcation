@@ -57,3 +57,9 @@ func (t TeacherDao) FindTeacherByEmail(email string) (*etity.Teacher, error) {
 		return &teacher, nil
 	}
 }
+
+func (t TeacherDao) FindTeacherNameById(id int) string {
+	teacher := etity.Teacher{}
+	DB.Where("id = ?", id).First(&teacher)
+	return teacher.Name
+}

@@ -32,8 +32,14 @@ message DeleteCourseResp {
   bool res = 3;
 }
 
+message CourseHitsReq {
+  int32 courseId = 1;
+}
+
+
 service courseRpc {
   rpc AddCourse(CourseAddReq) returns (CourseResp);
   rpc DeleteCourse(DeleteCourseReq) returns (DeleteCourseResp);
   rpc UpdateCourse(UpdateCourseReq) returns (CourseResp);
+  rpc CourseHits(CourseHitsReq) returns (CourseResp);
 }

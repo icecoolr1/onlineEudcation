@@ -17,11 +17,13 @@ type (
 	AddVideoResponse   = rpc.AddVideoResponse
 	DelVideoReq        = rpc.DelVideoReq
 	UpdateVideoRequest = rpc.UpdateVideoRequest
+	VideoHitsReq       = rpc.VideoHitsReq
 
 	VideoService interface {
 		AddVideo(ctx context.Context, in *AddVideoRequest, opts ...grpc.CallOption) (*AddVideoResponse, error)
 		DelVideo(ctx context.Context, in *DelVideoReq, opts ...grpc.CallOption) (*AddVideoResponse, error)
 		UpdateVideo(ctx context.Context, in *UpdateVideoRequest, opts ...grpc.CallOption) (*AddVideoResponse, error)
+		VideoHits(ctx context.Context, in *VideoHitsReq, opts ...grpc.CallOption) (*AddVideoResponse, error)
 	}
 
 	defaultVideoService struct {
@@ -48,4 +50,9 @@ func (m *defaultVideoService) DelVideo(ctx context.Context, in *DelVideoReq, opt
 func (m *defaultVideoService) UpdateVideo(ctx context.Context, in *UpdateVideoRequest, opts ...grpc.CallOption) (*AddVideoResponse, error) {
 	client := rpc.NewVideoServiceClient(m.cli.Conn())
 	return client.UpdateVideo(ctx, in, opts...)
+}
+
+func (m *defaultVideoService) VideoHits(ctx context.Context, in *VideoHitsReq, opts ...grpc.CallOption) (*AddVideoResponse, error) {
+	client := rpc.NewVideoServiceClient(m.cli.Conn())
+	return client.VideoHits(ctx, in, opts...)
 }

@@ -36,3 +36,8 @@ func (s *CourseRpcServer) UpdateCourse(ctx context.Context, in *Rpc.UpdateCourse
 	l := logic.NewUpdateCourseLogic(ctx, s.svcCtx)
 	return l.UpdateCourse(in)
 }
+
+func (s *CourseRpcServer) CourseHits(ctx context.Context, in *Rpc.CourseHitsReq) (*Rpc.CourseResp, error) {
+	l := logic.NewCourseHitsLogic(ctx, s.svcCtx)
+	return l.CourseHits(in)
+}

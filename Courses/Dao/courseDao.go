@@ -2,6 +2,7 @@ package Dao
 
 import (
 	"fmt"
+	"gorm.io/gorm"
 	"onlineEudcation/Courses/Etity"
 	"onlineEudcation/Tools/scripts"
 )
@@ -56,4 +57,27 @@ func (CourseDao) FindAllCourses() []Etity.Course {
 func (d CourseDao) FindCourseByTeacherId(teacherId int) []Etity.Course {
 	DB.Where("t_id = ?", teacherId).Find(&courseList)
 	return courseList
+}
+
+func (d CourseDao) GetCourseList(tag string) []Etity.Course {
+	DB.Where("course_tag = ? and course_status = 1", tag).Order("course_play_sum desc").Find(&courseList)
+	return courseList
+}
+
+func (d CourseDao) GetRecommendCourseList() []Etity.Course {
+	DB.Where("course_status = 1").Order("course_play_sum desc").Limit(3).Find(&courseList)
+	return courseList
+}
+
+func (d CourseDao) GetRecommendCourseListPersonally(tag string) []Etity.Course {
+	DB.Where("course_tag = ? and course_status = 1", tag).Order("course_play_sum desc").Limit(2).Find(&courseList)
+	return courseList
+}
+
+func (d CourseDao) CourseHits(courseId int) bool {
+	course := Etity.Course{
+		Model: gorm.Model{ID: uint(courseId)},
+	}
+	DB.Model(&course).Update("course_play_sum", gorm.Expr("course_play_sum + ?", 1))
+	return true
 }

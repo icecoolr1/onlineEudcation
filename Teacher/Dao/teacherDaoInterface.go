@@ -17,4 +17,6 @@ type TeacherInterface interface {
 	FindAllTeachers() []etity.Teacher
 	// FindTeacherByEmail 通过邮箱查询教师信息
 	FindTeacherByEmail(email string) (*etity.Teacher, error)
+	// FindTeacherNameById 通过id 查询教师名
+	FindTeacherNameById(id int) string
 }

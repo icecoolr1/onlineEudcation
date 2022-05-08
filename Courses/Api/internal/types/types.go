@@ -20,6 +20,17 @@ type SearchCourseByIdItem struct {
 	CourseVideoNumBer int32  `json:"courseVideoNumBer"`
 }
 
+type SearchCourseByIdItemByStudent struct {
+	CourseId          int32  `json:"courseId"`
+	CourseName        string `json:"courseName"`
+	CourseImg         string `json:"courseImg"`
+	CourseType        string `json:"courseType"`
+	CourseStatus      bool   `json:"courseStatus"`
+	CoursePlaySum     int32  `json:"coursePlaySum"`
+	CourseVideoNumBer int32  `json:"courseVideoNumBer"`
+	TeacherName       string `json:"teacherName"`
+}
+
 type SearchCourseByIdRes struct {
 	Code       int32                  `json:"code"`
 	CourseList []SearchCourseByIdItem `json:"courseList"`
@@ -57,5 +68,36 @@ type DelCourseReq struct {
 
 type DelCourseRes struct {
 	Code       int32                  `json:"code"`
+	CourseList []SearchCourseByIdItem `json:"courseList"`
+}
+
+type GetCourseListReq struct {
+	Tag string `json:"tag"`
+}
+
+type GetCourseListRes struct {
+	Code       int                             `json:"code"`
+	CourseList []SearchCourseByIdItemByStudent `json:"courseList"`
+}
+
+type GetRecommendCourseListReq struct {
+	StudentId int `json:"studentId"`
+}
+
+type GetRecommendCourseListRes struct {
+	Code       int                             `json:"code"`
+	CourseList []SearchCourseByIdItemByStudent `json:"courseList"`
+}
+
+type CourseHitsReq struct {
+	CourseId int `json:"courseId"`
+}
+
+type SearchCourseByNameReq struct {
+	Text string `json:"text"`
+}
+
+type SearchCourseByNameRes struct {
+	Code       int                    `json:"code"`
 	CourseList []SearchCourseByIdItem `json:"courseList"`
 }

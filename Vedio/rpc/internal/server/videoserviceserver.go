@@ -36,3 +36,8 @@ func (s *VideoServiceServer) UpdateVideo(ctx context.Context, in *rpc.UpdateVide
 	l := logic.NewUpdateVideoLogic(ctx, s.svcCtx)
 	return l.UpdateVideo(in)
 }
+
+func (s *VideoServiceServer) VideoHits(ctx context.Context, in *rpc.VideoHitsReq) (*rpc.AddVideoResponse, error) {
+	l := logic.NewVideoHitsLogic(ctx, s.svcCtx)
+	return l.VideoHits(in)
+}

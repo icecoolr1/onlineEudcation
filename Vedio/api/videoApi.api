@@ -41,6 +41,10 @@ type FindVideoByIdRes {
 	VideoInfo Video `json:"video"`
 }
 
+type VideoHitsReq {
+	VideoId int32 `json:"videoId"`
+}
+
 @server(
 	
 	prefix : /video
@@ -56,4 +60,6 @@ service videoApi {
 	post /updateVideo (AddVideoReq) returns (AddVideoRes)
 	@handler findVideoById
 	post /findVideoById (FindVideoByIdReq) returns (FindVideoByIdRes)
+	@handler videoHits
+	post /videoHits (VideoHitsReq) returns (AddVideoRes)
 }

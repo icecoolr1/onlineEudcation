@@ -42,3 +42,7 @@ type FindVideoByIdRes struct {
 	Code      int32 `json:"code"`
 	VideoInfo Video `json:"video"`
 }
+
+type VideoHitsReq struct {
+	VideoId int32 `json:"videoId"`
+}

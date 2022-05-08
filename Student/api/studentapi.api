@@ -25,6 +25,16 @@ type StudentRegisterRes {
 	Message string `json:"message"`
 }
 
+type SendChosenTags {
+	Tags        []string `json:"tags"`
+	StudentName string   `json:"sName"`
+}
+
+type Response {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}
+
 @server(
 	prefix: /student
 )
@@ -33,4 +43,6 @@ service studentApi {
 	post /studentLogin(StudentLoginReq) returns(StudentLoginRes)
 	@handler studentRegister
 	post /studentRegister(StudentRegisterReq) returns(StudentRegisterRes)
+	@handler sendChosenTags
+	post /sendChosenTags(SendChosenTags) returns(Response)
 }

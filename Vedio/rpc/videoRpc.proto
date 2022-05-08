@@ -26,8 +26,14 @@ message UpdateVideoRequest {
   int32 videoSeq = 4;
 }
 
+message VideoHitsReq{
+  int64 videoId = 1;
+}
+
+
 service VideoService {
   rpc AddVideo(AddVideoRequest) returns (AddVideoResponse);
   rpc DelVideo(DelVideoReq) returns (AddVideoResponse);
   rpc UpdateVideo(UpdateVideoRequest) returns (AddVideoResponse);
+  rpc VideoHits(VideoHitsReq) returns (AddVideoResponse);
 }

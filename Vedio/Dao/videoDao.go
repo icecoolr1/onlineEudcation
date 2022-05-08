@@ -2,6 +2,7 @@ package Dao
 
 import (
 	"fmt"
+	"gorm.io/gorm"
 	"onlineEudcation/Tools/scripts"
 	"onlineEudcation/Vedio/Etity"
 )
@@ -48,4 +49,10 @@ func (d VideoDao) FindVideoByVideoId(videoId int) Etity.Video {
 	video := Etity.Video{}
 	DB.Where("id = ?", videoId).First(&video)
 	return video
+}
+
+func (d VideoDao) VideoHits(videoId int) bool {
+	video := Etity.Video{Model: gorm.Model{ID: uint(videoId)}}
+	DB.Model(&video).Update("video_play_sum", gorm.Expr("video_play_sum + ?", 1))
+	return true
 }

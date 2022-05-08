@@ -10,4 +10,8 @@ type CourseDaoInterface interface {
 	FindCourseByTeacherId(teacherId int) []Etity.Course
 	FindCourseByCourseName(courseName string) []Etity.Course
 	FindAllCourses() []Etity.Course
+	GetCourseList(tag string) []Etity.Course
+	GetRecommendCourseList() []Etity.Course
+	GetRecommendCourseListPersonally(tag string) []Etity.Course
+	CourseHits(courseId int) bool
 }

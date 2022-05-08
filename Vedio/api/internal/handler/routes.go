@@ -37,6 +37,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/findVideoById",
 				Handler: findVideoByIdHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/videoHits",
+				Handler: videoHitsHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/video"),
 	)
