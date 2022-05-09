@@ -10,3 +10,33 @@ type Response struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 }
+
+type Course struct {
+	CourseId          int32  `json:"courseId"`
+	CourseName        string `json:"courseName"`
+	CourseImg         string `json:"courseImg"`
+	CourseType        string `json:"courseType"`
+	CourseStatus      bool   `json:"courseStatus"`
+	CoursePlaySum     int32  `json:"coursePlaySum"`
+	CourseVideoNumBer int32  `json:"courseVideoNumBer"`
+	TeacherName       string `json:"teacherName"`
+}
+
+type SearchClassRequest struct {
+	StudentId int `json:"studentId"`
+}
+
+type SearchClassResponse struct {
+	Code    int      `json:"code"`
+	Courses []Course `json:"courses"`
+}
+
+type DeleteClassRequest struct {
+	StudentId int `json:"studentId"`
+	CourseId  int `json:"courseId"`
+}
+
+type DeleteClassResponse struct {
+	Code    int      `json:"code"`
+	Courses []Course `json:"courses"`
+}

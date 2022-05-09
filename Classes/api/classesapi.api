@@ -9,6 +9,33 @@ type response {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 }
+type Course {
+	CourseId          int32  `json:"courseId"`
+	CourseName        string `json:"courseName"`
+	CourseImg         string `json:"courseImg"`
+	CourseType        string `json:"courseType"`
+	CourseStatus      bool   `json:"courseStatus"`
+	CoursePlaySum     int32  `json:"coursePlaySum"`
+	CourseVideoNumBer int32  `json:"courseVideoNumBer"`
+	TeacherName       string `json:"teacherName"`
+}
+type SearchClassRequest {
+	StudentId int `json:"studentId"`
+}
+
+type SearchClassResponse {
+	Code    int      `json:"code"`
+	Courses []Course `json:"courses"`
+}
+
+type deleteClassRequest {
+	StudentId int `json:"studentId"`
+	CourseId  int `json:"courseId"`
+}
+type deleteClassResponse {
+	Code    int      `json:"code"`
+	Courses []Course `json:"courses"`
+}
 
 @server(
 	prefix : /classes
@@ -16,4 +43,8 @@ type response {
 service classapi {
 	@handler AddClass
 	post /addClass(AddClassRequest) returns (response)
+	@handler SearchClass
+	post /searchClass(SearchClassRequest) returns (SearchClassResponse)
+	@handler DeleteClass
+	post /deleteClass(deleteClassRequest) returns (deleteClassResponse)
 }

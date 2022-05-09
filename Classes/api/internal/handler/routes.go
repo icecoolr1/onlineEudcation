@@ -17,6 +17,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/addClass",
 				Handler: AddClassHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/searchClass",
+				Handler: SearchClassHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/deleteClass",
+				Handler: DeleteClassHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/classes"),
 	)

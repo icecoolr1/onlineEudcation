@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"onlineEudcation/Classes/rpc/rpc"
 
 	"onlineEudcation/Classes/api/internal/svc"
 	"onlineEudcation/Classes/api/internal/types"
@@ -24,7 +25,26 @@ func NewAddClassLogic(ctx context.Context, svcCtx *svc.ServiceContext) AddClassL
 }
 
 func (l *AddClassLogic) AddClass(req types.AddClassRequest) (resp *types.Response, err error) {
-	// todo: add your logic here and delete this line
+	res, err := l.svcCtx.ClassesRpc.AddClass(l.ctx, &rpc.AddClassRequest{
+		StudentId: int32(req.StudentId),
+		CourseId:  int32(req.CourseId),
+	})
 
-	return
+	if err != nil {
+		return nil, err
+	} else {
+
+		if res.GetCode() == 300 {
+			return &types.Response{
+				Code:    300,
+				Message: "您已收藏该课程",
+			}, nil
+		} else {
+			return &types.Response{
+				Code:    200,
+				Message: "ok",
+			}, nil
+		}
+	}
+
 }

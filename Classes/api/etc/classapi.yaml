@@ -1,3 +1,8 @@
 Name: classapi
 Host: 0.0.0.0
-Port: 8888
+Port: 8893
+ClassesRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: classesrpc.rpc

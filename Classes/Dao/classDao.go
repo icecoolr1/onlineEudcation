@@ -1,7 +1,6 @@
 package Dao
 
 import (
-	"fmt"
 	"onlineEudcation/Classes/Etity"
 	"onlineEudcation/Tools/scripts"
 )
@@ -11,16 +10,13 @@ type ClassesDao struct{}
 var DB = scripts.GetDatabaseConnection()
 var classesList []Etity.Classes
 
-func (ClassesDao) AddClass(classes []Etity.Classes) bool {
-	for _, e := range classes {
-		fmt.Printf("%v\n", e)
-		DB.Create(&e)
-	}
+func (ClassesDao) AddClass(class Etity.Classes) bool {
+	DB.Create(&class)
 	return true
 }
 
-func (ClassesDao) DelClass(classId []int) bool {
-	DB.Where("id in (?)", classId).Delete(&Etity.Classes{})
+func (ClassesDao) DelClass(studentId int, courseId int) bool {
+	DB.Where("s_id = ? and c_id = ?", studentId, courseId).Delete(&Etity.Classes{})
 	return true
 }
 
@@ -35,7 +31,18 @@ func (ClassesDao) FindClass(classId int) Etity.Classes {
 	return class
 }
 
-func (ClassesDao) FindAllClasses() []Etity.Classes {
-	DB.Find(&classesList)
+func (ClassesDao) FindAllClasses(studentId int) []Etity.Classes {
+	DB.Where("s_id = ?", studentId).Find(&classesList)
 	return classesList
+}
+
+func (d ClassesDao) IsFav(studentId int, courseId int) bool {
+	first := DB.Where("s_id = ? and c_id = ?", studentId, courseId).First(&Etity.Classes{})
+	if first.RowsAffected > 0 {
+		// 已经被收藏
+		return true
+	} else {
+		// 未被收藏
+		return false
+	}
 }

@@ -3,14 +3,19 @@ syntax = "proto3";
 package rpc;
 option go_package = "./rpc";
 
-message StreamReq {
-  string name = 1;
+message AddClassRequest {
+  int32 studentId = 1;
+  int32 courseId = 2;
 }
 
-message StreamResp {
-  string greet = 1;
+message Request {
+  int32 code = 1;
+  string message = 2;
 }
 
-service StreamGreeter {
-  rpc greet(StreamReq) returns (StreamResp);
+
+service ClassesRpc {
+  rpc AddClass(AddClassRequest) returns (Request);
+  rpc DeleteClass(AddClassRequest) returns (Request);
+
 }

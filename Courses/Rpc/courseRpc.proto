@@ -37,9 +37,12 @@ message CourseHitsReq {
 }
 
 
+
+
 service courseRpc {
   rpc AddCourse(CourseAddReq) returns (CourseResp);
   rpc DeleteCourse(DeleteCourseReq) returns (DeleteCourseResp);
   rpc UpdateCourse(UpdateCourseReq) returns (CourseResp);
   rpc CourseHits(CourseHitsReq) returns (CourseResp);
+
 }
