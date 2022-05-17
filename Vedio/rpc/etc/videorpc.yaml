@@ -2,5 +2,5 @@ Name: videorpc.rpc
 ListenOn: 0.0.0.0:9002
 Etcd:
   Hosts:
-  - 127.0.0.1:2379
+  - 124.221.155.122:2379
   Key: videorpc.rpc
