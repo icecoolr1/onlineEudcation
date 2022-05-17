@@ -1,0 +1,66 @@
+syntax = "v1"
+
+type searchCoursesReq {
+	AdminID int `json:"admin_id"`
+}
+type Course {
+	CourseId          int32  `json:"courseId"`
+	CourseName        string `json:"courseName"`
+	CourseImg         string `json:"courseImg"`
+	CourseType        string `json:"courseType"`
+	CourseStatus      bool   `json:"courseStatus"`
+	CoursePlaySum     int32  `json:"coursePlaySum"`
+	CourseVideoNumBer int32  `json:"courseVideoNumBer"`
+	TeacherId         int    `json:"teacherId"`
+}
+type SearchCoursesRes {
+	Courses []Course `json:"courses"`
+}
+
+type ChangeStatusReq {
+	CourseId int32 `json:"courseId"`
+}
+type ChangeStatusRes {
+	Code int `json:"code"`
+}
+
+type GetReq {
+	TeacherId int `json:"teacherId"`
+}
+
+type CensorItem {
+	ID           int    `json:"id"`
+	CourseId     int    `json:"courseId"`
+	TeacherId    int    `json:"teacherId"`
+	CensorStatus bool   `json:"censorStatus"`
+	Message      string `json:"message"`
+}
+
+type GetRes {
+	CensorList []CensorItem `json:"censorList"`
+}
+
+type AddCensorReq {
+	CourseId     int    `json:"courseId"`
+	TeacherId    int    `json:"teacherId"`
+	CensorStatus bool   `json:"censorStatus"`
+	Message      string `json:"message"`
+}
+type AddCensorRes {
+	Code int `json:"code"`
+}
+
+@server(
+	prefix : /admin
+)
+service adminapi {
+	@handler searchNeededCourses
+	post /searchCourses(searchCoursesReq) returns (SearchCoursesRes)
+	@handler changeCourseStatus
+	post /changeCourseStatus(ChangeStatusReq) returns (ChangeStatusRes)
+	@handler getCensorList
+	post /getCensorList(GetReq) returns (GetRes)
+	@handler addCensor
+	post /addCensor(AddCensorReq) returns (AddCensorRes)
+	
+}

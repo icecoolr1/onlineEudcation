@@ -1,7 +1,5 @@
 package scripts
 
-//import "gorm.io/gorm"
-//
 //func main() {
 //	db := GetDatabaseConnection()
 // 建表

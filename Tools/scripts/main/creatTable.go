@@ -1,14 +1,14 @@
 package main
 
 import (
+	"onlineEudcation/Admin/etity"
 	"onlineEudcation/Tools/scripts"
-	Etity "onlineEudcation/Vedio/Etity"
 )
 
 func main() {
 	conn := scripts.GetDatabaseConnection()
 
-	err := conn.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").AutoMigrate(new(Etity.Video)).Error
+	err := conn.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").AutoMigrate(new(etity.Censorship)).Error
 	if err != nil {
 		panic(err)
 	}
